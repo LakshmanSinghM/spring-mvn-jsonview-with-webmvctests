@@ -14,16 +14,16 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(Views.UserDetails.class)
+    // @JsonView(Views.UserDetails.class)
     private Long id;
 
-    @JsonView(Views.UserDetails.class)
+    // @JsonView(Views.UserDetails.class)
     private String productName;
 
-    @JsonView(Views.UserDetails.class)
+    // @JsonView(Views.UserDetails.class)
     private Double total;
 
-    @JsonView(Views.UserDetails.class)
+    // @JsonView(Views.UserDetails.class)
     private String status;
 
     @ManyToOne

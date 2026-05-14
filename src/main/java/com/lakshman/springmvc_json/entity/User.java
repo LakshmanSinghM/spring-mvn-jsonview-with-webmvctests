@@ -1,7 +1,8 @@
 package com.lakshman.springmvc_json.entity;
- 
+
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.lakshman.springmvc_json.dto.Views;
 
@@ -24,14 +25,14 @@ public class User {
     // @JsonView(Views.UserSummary.class)
     private Long id;
 
-
     // @JsonView(Views.UserSummary.class)
     private String name;
 
-    @JsonView(Views.UserSummary.class)
+    // @JsonView(Views.UserSummary.class)
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonView(Views.UserDetails.class)
+    // @JsonView(Views.UserDetails.class)
+    @JsonIgnore
     private List<Order> orders;
 }
