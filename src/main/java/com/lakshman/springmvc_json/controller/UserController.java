@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.lakshman.springmvc_json.dto.ApiResponse;
-import com.lakshman.springmvc_json.dto.UserRequestDto;
+
+import com.fasterxml.jackson.annotation.JsonView;
 import com.lakshman.springmvc_json.entity.User;
 import com.lakshman.springmvc_json.service.UserService;
+import com.lakshman.springmvc_json.view.Views;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -27,35 +29,33 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    // @JsonView(Views.UserSummary.class)
-    public ResponseEntity<ApiResponse<List<User>>> getAllUsers() {
-
+    @JsonView(Views.UserSummary.class)
+    public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
-    // @JsonView(Views.UserDetails.class)
-    public ResponseEntity<ApiResponse<User>> getUser(@PathVariable Long id) {
-
+    @JsonView(Views.UserDetails.class)
+    public ResponseEntity<User> getUser(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<User>> createUser(@Valid @RequestBody UserRequestDto user) {
-
-        return ResponseEntity.ok(userService.createUser(user));
+    @JsonView(Views.UserDetails.class)
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(user));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<User>> updateUser(@PathVariable Long id,
-            @Valid @RequestBody UserRequestDto user) {
-
+    @JsonView(Views.UserDetails.class)
+    public ResponseEntity<User> updateUser(@PathVariable Long id,
+            @Valid @RequestBody User user) {
         return ResponseEntity.ok(userService.updateUser(id, user));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable Long id) {
-
-        return ResponseEntity.status(HttpStatus.OK).body(userService.deleteUser(id));
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -1,4 +1,4 @@
-package com.lakshman.springmvc_json.dto;
+package com.lakshman.springmvc_json.view;
 
 public class Views {
 
