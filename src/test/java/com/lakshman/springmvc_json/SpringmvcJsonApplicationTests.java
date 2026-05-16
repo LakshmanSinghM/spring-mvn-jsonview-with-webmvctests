@@ -9,5 +9,4 @@ class SpringmvcJsonApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

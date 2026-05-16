@@ -15,10 +15,12 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Table(name = "users")
 @Data
+@ToString
 public class User {
 
     @Id
@@ -31,11 +33,13 @@ public class User {
     private String name;
 
     @NotBlank(message = "Email is required")
+    //  validation generally done at the DTO level to remove the mess code from the entity level
     @Email(message = "Email should be valid")
     @JsonView(Views.UserSummary.class)
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    // Once user deleted, its orders are also deleted (cascade type)
     @JsonView(Views.UserDetails.class)
     private List<Order> orders;
 }

@@ -7,17 +7,22 @@ import com.lakshman.springmvc_json.exception.ResourceNotFoundException;
 import com.lakshman.springmvc_json.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 
     private final UserRepository userRepository;
 
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        List<User> users = userRepository.findAll();
+        log.info("The users are " + users);
+
+        return users;
     }
 
     public User getUserById(Long id) {

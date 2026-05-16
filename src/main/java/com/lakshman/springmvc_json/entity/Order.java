@@ -8,10 +8,12 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Table(name = "orders")
 @Data
+@ToString(exclude = "user")
 public class Order {
 
     @Id
